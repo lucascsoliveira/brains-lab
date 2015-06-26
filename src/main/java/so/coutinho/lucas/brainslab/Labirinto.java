@@ -15,8 +15,8 @@ public class Labirinto {
 
     public final static Character ENTRADA = 'S';
     public final static Character SAIDA = 'F';
-    public final static Character PASSAGEM = '1';
     public final static Character PAREDE = '0';
+    public final static Character PASSAGEM = '1';
 
     private final Integer[][] matrizPeso;
     private final Character[][] matrizCaminho;
@@ -70,6 +70,26 @@ public class Labirinto {
 
     public boolean acabou() {
         return posicaoGato.equals(posicaoRato) || posicaoRato.equals(saida);
+    }
+
+    public Integer getMaximoColunas() {
+        return matrizCaminho[0].length;
+    }
+
+    public Integer getMaximoLinhas() {
+        return matrizCaminho.length;
+    }
+
+    public Character verificaCaminho(Posicao posicao) {
+        return matrizCaminho[posicao.getX()][posicao.getY()];
+    }
+
+    public Double verificaPeso(Posicao posicao) {
+        if (posicao.equals(posicaoGato)) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        return matrizPeso[posicao.getX()][posicao.getY()].doubleValue();
     }
 
 }
