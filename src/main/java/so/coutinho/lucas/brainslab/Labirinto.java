@@ -2,6 +2,7 @@ package so.coutinho.lucas.brainslab;
 
 import lombok.Getter;
 import lombok.Setter;
+import so.coutinho.lucas.brainslab.animais.Animal;
 import so.coutinho.lucas.brainslab.exceptions.CharacterNotFoundException;
 
 /**
