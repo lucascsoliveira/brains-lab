@@ -3,6 +3,7 @@ package so.coutinho.lucas.brainslab;
 import lombok.Getter;
 import lombok.Setter;
 import so.coutinho.lucas.brainslab.animais.Animal;
+import so.coutinho.lucas.brainslab.animais.AnimalFactory;
 import so.coutinho.lucas.brainslab.exceptions.CharacterNotFoundException;
 
 /**
@@ -34,13 +35,12 @@ public class Labirinto {
         entrada = localizarEntrada();
         saida = localizarSaida();
 
-        //TODO: Criar as classes Gato e Rato
-        gato = null;
+        //TODO: Criar a classe Rato
+        gato = AnimalFactory.getAnimal(AnimalFactory.GATO);
         rato = null;
 
-        //TODO: posicaoRato = entrada.clone()
         //TODO:posicaoGato = (?)
-        posicaoRato = null;
+        posicaoRato = entrada.clone();
         posicaoGato = null;
     }
 
@@ -60,11 +60,11 @@ public class Labirinto {
         throw new CharacterNotFoundException(character);
     }
 
-    public Posicao localizarEntrada() {
+    public final Posicao localizarEntrada() {
         return localizar(ENTRADA);
     }
 
-    public Posicao localizarSaida() {
+    public final Posicao localizarSaida() {
         return localizar(SAIDA);
     }
 
