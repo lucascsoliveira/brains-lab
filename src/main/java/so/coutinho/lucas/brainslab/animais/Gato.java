@@ -27,7 +27,7 @@ class Gato implements Animal {
         novaPosicao = new Posicao(linha, coluna);
 
         //TODO: Verificar se o GATO só pode aparecer em passagens (ENTRADA e SAÍDA?)
-        if (labirinto.verificaCaminho(novaPosicao).equals(Labirinto.PASSAGEM)) {
+        if (labirinto.getCaminho(novaPosicao).equals(Labirinto.PASSAGEM)) {
             return novaPosicao;
         }
 

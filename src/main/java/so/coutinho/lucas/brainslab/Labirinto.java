@@ -1,7 +1,11 @@
 package so.coutinho.lucas.brainslab;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 import lombok.Getter;
 import lombok.Setter;
 import so.coutinho.lucas.brainslab.animais.Animal;
@@ -29,6 +33,36 @@ public class Labirinto {
     private final Animal rato;
     private Posicao gatoPosicao;
     private Posicao ratoPosicao;
+
+    public Labirinto(File file) throws FileNotFoundException {
+        Scanner scanner = new Scanner(file);
+        int maxLinha = scanner.nextInt();
+        int maxColuna = scanner.nextInt();
+
+        matrizCaminho = new Character[maxLinha][maxColuna];
+        matrizPeso = new Integer[maxLinha][maxColuna];
+
+        for (int linha = 0; linha < maxLinha; linha++) {
+            for (int coluna = 0; coluna < maxColuna; coluna++) {
+                matrizCaminho[linha][coluna] = scanner.next().charAt(0);
+            }
+        }
+
+        for (int linha = 0; linha < maxLinha; linha++) {
+            for (int coluna = 0; coluna < maxColuna; coluna++) {
+                matrizPeso[linha][coluna] = scanner.nextInt();
+            }
+        }
+
+        entrada = localizarEntrada();
+        saida = localizarSaida();
+
+        gato = AnimalFactory.getAnimal(AnimalFactory.GATO);
+        rato = AnimalFactory.getAnimal(AnimalFactory.RATO);
+
+        gatoPosicao = new Posicao();
+        ratoPosicao = entrada.clone();
+    }
 
     public Labirinto(Character[][] labirinto, Integer[][] custo) {
         matrizCaminho = labirinto;
@@ -87,11 +121,11 @@ public class Labirinto {
         return matrizCaminho.length;
     }
 
-    public Character verificaCaminho(Posicao posicao) {
+    public Character getCaminho(Posicao posicao) {
         return matrizCaminho[posicao.getX()][posicao.getY()];
     }
 
-    public Double verificaPeso(Posicao posicao) {
+    public Double getPeso(Posicao posicao) {
         if (posicao.equals(gatoPosicao)) {
             return Double.POSITIVE_INFINITY;
         }
@@ -103,7 +137,7 @@ public class Labirinto {
         List<List<Posicao>> rotas = new ArrayList<>();
         List<Posicao> rota = new ArrayList<>();
 
-        loop(rotas, rota, posicao);
+        fazVarredura(rotas, rota, posicao);
 
         return rotas;
     }
@@ -112,14 +146,14 @@ public class Labirinto {
         return buscarMenorRota(buscarRotas(posicao));
     }
 
-    public List<Posicao> buscarMenorRota(List<List<Posicao>> rotas) {
+    private List<Posicao> buscarMenorRota(List<List<Posicao>> rotas) {
         Double menorPeso = Double.POSITIVE_INFINITY;
         List<Posicao> menorRota = rotas.get(0);
 
         for (List<Posicao> rota : rotas) {
             Double peso = 0.0;
             for (Posicao posicao : rota) {
-                peso += verificaPeso(posicao);
+                peso += getPeso(posicao);
             }
 
             if (peso < menorPeso) {
@@ -131,7 +165,7 @@ public class Labirinto {
         return menorRota;
     }
 
-    private void loop(List<List<Posicao>> rotas, List<Posicao> rota, Posicao posicao) {
+    private void fazVarredura(List<List<Posicao>> rotas, List<Posicao> rota, Posicao posicao) {
         int linha = posicao.getX(), coluna = posicao.getY();
         List<Posicao> novaRota = new ArrayList<>(rota);
 
@@ -143,16 +177,17 @@ public class Labirinto {
             novaRota.add(posicao);
 
             if (posicao.equals(ratoPosicao)) {
+                Collections.reverse(novaRota);
                 rotas.add(novaRota);
             } else {
                 // CIMA
-                loop(rotas, rota, new Posicao(linha - 1, coluna));
+                fazVarredura(rotas, novaRota, new Posicao(linha - 1, coluna));
                 // DIREITA
-                //loop(rotas, rota, new Posicao(linha, coluna + 1));
+                //fazVarredura(rotas, novaRota, new Posicao(linha, coluna + 1));
                 // BAIXO
-                //loop(rotas, rota, new Posicao(linha + 1, coluna));
+                //fazVarredura(rotas, novaRota, new Posicao(linha + 1, coluna));
                 // ESQUERDA
-                loop(rotas, rota, new Posicao(linha, coluna - 1));
+                fazVarredura(rotas, novaRota, new Posicao(linha, coluna - 1));
             }
         }
     }
@@ -167,15 +202,15 @@ public class Labirinto {
                 Posicao posicao = new Posicao(lin, col);
 
                 if ((posicao.equals(entrada) || posicao.equals(saida)) && posicao.equals(gatoPosicao)) {
-                    string += verificaCaminho(posicao) + "G";
+                    string += getCaminho(posicao) + "G";
                 } else if ((posicao.equals(entrada) || posicao.equals(saida)) && posicao.equals(ratoPosicao)) {
-                    string += verificaCaminho(posicao) + "R";
+                    string += getCaminho(posicao) + "R";
                 } else if (posicao.equals(gatoPosicao)) {
                     string += "G";
                 } else if (posicao.equals(ratoPosicao)) {
                     string += "R";
                 } else {
-                    string += verificaCaminho(posicao);
+                    string += getCaminho(posicao);
                 }
                 string += "\t";
             }
