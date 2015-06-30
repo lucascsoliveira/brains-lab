@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package so.coutinho.lucas.brainslab;
 
 import java.io.File;
@@ -11,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -102,6 +95,34 @@ public class LabirintoTest {
         for (Labirinto labirinto : labirintos) {
             int indexRota = 0;
             for (List<Posicao> labRotas : labirinto.buscarRotas(labirinto.getSaida())) {
+                assertArrayEquals(labRotas.toArray(), rotasPorArquivo.get(indexArquivo).get(indexRota++).toArray());
+            }
+
+            indexArquivo++;
+        }
+    }
+
+    /**
+     * Test of buscarMenorRota method, of class Labirinto.
+     */
+    @Test
+    public void testBuscarMenorRota_SemGato() {
+        List<List<List<Posicao>>> rotasPorArquivo = new ArrayList<>();
+
+        //Saida - test001.txt
+        List<List<Posicao>> rotasTest001 = new ArrayList<>();
+        rotasTest001.add(new ArrayList<>(Arrays.asList(new Posicao(0, 0), new Posicao(1, 0), new Posicao(2, 0), new Posicao(3, 0), new Posicao(4, 0), new Posicao(4, 1), new Posicao(4, 2), new Posicao(4, 3), new Posicao(4, 4))));
+        rotasPorArquivo.add(rotasTest001);
+        //Saida - test002.txt
+        List<List<Posicao>> rotasTest002 = new ArrayList<>();
+        rotasTest002.add(new ArrayList<>(Arrays.asList(new Posicao(1, 1), new Posicao(1, 2), new Posicao(1, 3), new Posicao(2, 3), new Posicao(3, 3))));
+        rotasTest002.add(new ArrayList<>(Arrays.asList(new Posicao(1, 1), new Posicao(2, 1), new Posicao(3, 1), new Posicao(3, 2), new Posicao(3, 3))));
+        rotasPorArquivo.add(rotasTest002);
+
+        int indexArquivo = 0;
+        for (Labirinto labirinto : labirintos) {
+            int indexRota = 0;
+            for (List<Posicao> labRotas : labirinto.buscarRotas(labirinto.getSaida())) {
                 System.out.println("LabRotas" + labRotas);
                 System.out.println(rotasPorArquivo.get(indexArquivo));
                 assertArrayEquals(labRotas.toArray(), rotasPorArquivo.get(indexArquivo).get(indexRota++).toArray());
@@ -115,8 +136,8 @@ public class LabirintoTest {
      * Test of buscarMenorRota method, of class Labirinto.
      */
     @Test
-    public void testBuscarMenorRota_Posicao() {
-        fail("Não implementado");
+    public void testBuscarMenorRota_ComGato() {
+
     }
 
 }
