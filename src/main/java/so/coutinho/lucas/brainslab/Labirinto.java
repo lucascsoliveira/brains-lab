@@ -133,11 +133,11 @@ public class Labirinto {
         return matrizPeso[posicao.getX()][posicao.getY()].doubleValue();
     }
 
-    public List<List<Posicao>> buscarRotas(Posicao posicao) {
+    public List<List<Posicao>> buscarRotas(Posicao origem) {
         List<List<Posicao>> rotas = new ArrayList<>();
         List<Posicao> rota = new ArrayList<>();
 
-        fazVarredura(rotas, rota, posicao);
+        fazVarredura(rotas, rota, origem, saida);
 
         return rotas;
     }
@@ -165,8 +165,8 @@ public class Labirinto {
         return menorRota;
     }
 
-    private void fazVarredura(List<List<Posicao>> rotas, List<Posicao> rota, Posicao posicao) {
-        int linha = posicao.getX(), coluna = posicao.getY();
+    private void fazVarredura(List<List<Posicao>> rotas, List<Posicao> rota, Posicao origem, Posicao destino) {
+        int linha = destino.getX(), coluna = destino.getY();
         List<Posicao> novaRota = new ArrayList<>(rota);
 
         // Verifica se a posição passada está dentro dos limites da matriz
@@ -174,20 +174,20 @@ public class Labirinto {
                 // e se a posição não é uma parede
                 && (!matrizCaminho[linha][coluna].equals(PAREDE))) {
 
-            novaRota.add(posicao);
+            novaRota.add(destino);
 
-            if (posicao.equals(ratoPosicao)) {
+            if (destino.equals(origem)) {
                 Collections.reverse(novaRota);
                 rotas.add(novaRota);
             } else {
                 // CIMA
-                fazVarredura(rotas, novaRota, new Posicao(linha - 1, coluna));
+                fazVarredura(rotas, novaRota, origem, new Posicao(linha - 1, coluna));
                 // DIREITA
-                //fazVarredura(rotas, novaRota, new Posicao(linha, coluna + 1));
+                //fazVarredura(rotas, novaRota, origem, new Posicao(linha, coluna + 1));
                 // BAIXO
-                //fazVarredura(rotas, novaRota, new Posicao(linha + 1, coluna));
+                //fazVarredura(rotas, novaRota, origem, new Posicao(linha + 1, coluna));
                 // ESQUERDA
-                fazVarredura(rotas, novaRota, new Posicao(linha, coluna - 1));
+                fazVarredura(rotas, novaRota, origem, new Posicao(linha, coluna - 1));
             }
         }
     }

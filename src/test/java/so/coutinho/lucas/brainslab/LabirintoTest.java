@@ -94,7 +94,7 @@ public class LabirintoTest {
         int indexArquivo = 0;
         for (Labirinto labirinto : labirintos) {
             int indexRota = 0;
-            for (List<Posicao> labRotas : labirinto.buscarRotas(labirinto.getSaida())) {
+            for (List<Posicao> labRotas : labirinto.buscarRotas(labirinto.getEntrada())) {
                 assertArrayEquals(labRotas.toArray(), rotasPorArquivo.get(indexArquivo).get(indexRota++).toArray());
             }
 
@@ -117,7 +117,7 @@ public class LabirintoTest {
         int indexArquivo = 0;
         for (List<Posicao> menorRota : menoresRotas) {
             Labirinto labirinto = labirintos.get(indexArquivo++);
-            assertArrayEquals(menorRota.toArray(), labirinto.buscarMenorRota(labirinto.getSaida()).toArray());
+            assertArrayEquals(menorRota.toArray(), labirinto.buscarMenorRota(labirinto.getEntrada()).toArray());
         }
     }
 
@@ -139,7 +139,7 @@ public class LabirintoTest {
         int indexArquivo = 0;
         for (List<Posicao> menorRota : menoresRotas) {
             Labirinto labirinto = labirintos.get(indexArquivo++);
-            assertArrayEquals(menorRota.toArray(), labirinto.buscarMenorRota(labirinto.getSaida()).toArray());
+            assertArrayEquals(menorRota.toArray(), labirinto.buscarMenorRota(labirinto.getEntrada()).toArray());
         }
     }
 
