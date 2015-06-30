@@ -9,10 +9,11 @@ import so.coutinho.lucas.brainslab.Posicao;
  */
 public class Rato implements Animal {
 
+    private static final Integer PROXIMA_POSICAO = 1;
+
     @Override
     public Posicao mover(Labirinto labirinto) {
-        //TODO: Criar movimento do rato
-        return labirinto.getRatoPosicao().clone();
+        return labirinto.buscarMenorRota(labirinto.getRatoPosicao()).get(PROXIMA_POSICAO);
     }
 
 }
