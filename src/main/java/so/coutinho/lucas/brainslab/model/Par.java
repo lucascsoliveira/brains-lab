@@ -1,4 +1,4 @@
-package so.coutinho.lucas.brainslab;
+package so.coutinho.lucas.brainslab.model;
 
 import lombok.Data;
 

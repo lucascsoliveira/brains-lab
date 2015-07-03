@@ -1,6 +1,6 @@
-package so.coutinho.lucas.brainslab.animais;
+package so.coutinho.lucas.brainslab.model.animais;
 
-import so.coutinho.lucas.brainslab.exceptions.AnimalDoesNotExist;
+import so.coutinho.lucas.brainslab.model.exceptions.AnimalDoesNotExist;
 
 /**
  *

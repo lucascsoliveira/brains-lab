@@ -1,4 +1,4 @@
-package so.coutinho.lucas.brainslab.exceptions;
+package so.coutinho.lucas.brainslab.model.exceptions;
 
 /**
  *

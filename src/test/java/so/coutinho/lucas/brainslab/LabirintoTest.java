@@ -1,5 +1,7 @@
 package so.coutinho.lucas.brainslab;
 
+import so.coutinho.lucas.brainslab.model.Posicao;
+import so.coutinho.lucas.brainslab.model.Labirinto;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

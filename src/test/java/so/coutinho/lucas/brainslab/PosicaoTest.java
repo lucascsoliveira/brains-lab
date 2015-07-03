@@ -1,5 +1,6 @@
 package so.coutinho.lucas.brainslab;
 
+import so.coutinho.lucas.brainslab.model.Posicao;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

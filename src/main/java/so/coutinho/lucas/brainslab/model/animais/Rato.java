@@ -1,7 +1,7 @@
-package so.coutinho.lucas.brainslab.animais;
+package so.coutinho.lucas.brainslab.model.animais;
 
-import so.coutinho.lucas.brainslab.Labirinto;
-import so.coutinho.lucas.brainslab.Posicao;
+import so.coutinho.lucas.brainslab.model.Labirinto;
+import so.coutinho.lucas.brainslab.model.Posicao;
 
 /**
  *
